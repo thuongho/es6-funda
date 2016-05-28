@@ -1,42 +1,39 @@
 'use strict';
 
+var _templateObject = _taggedTemplateLiteral(['a is ', ', while b is ', ', and ', ' is reversed'], ['a is ', ', while b is ', ', and ', ' is reversed']);
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 (function () {
 
-  // setting defaults
-  // default params is avail to other params in the list
-  function logSomthing() {
-    var something = arguments.length <= 0 || arguments[0] === undefined ? 'default messsage' : arguments[0];
-    var somethingElse = arguments.length <= 1 || arguments[1] === undefined ? something + 'with concat' : arguments[1];
+  // templating string
+  // support multiline string
+  // interpolation
 
-    console.log(something, somethingElse);
+  var templateStr = 'this is a \n  template string';
+
+  var a = '5',
+      b = 'something after 6';
+
+  // token substitution
+  console.log('a is ' + a + ', while b is ' + b);
+
+  function reverseString(string) {
+    return string.split('').reverse().join('');
   }
 
-  logSomthing();
-  logSomthing(undefined, 'and overriding');
+  console.log('a is ' + a + ', while b is ' + b + ', and ' + reverseString(b) + ' is reversed');
 
-  // spread operator ...
-  function sum(a, b, c) {
-    return a + b + c;
+  // tag a string
+  function str(literals, values) {
+
+    console.log(literals); // [ 'a is ', ', while b is ', ', and ', ' is reversed' ]
+    console.log(values); // [ '5', 'something after 6', '6 retfa gnihtemos' ]
+
+    return values[3] + literals[3] + literals[1] + values[2] + literals[0] + values[1];
   }
 
-  var nums = [1, 2, 3];
-
-  console.log(sum.apply(undefined, nums)); // 6
-  console.log(sum(nums)); // [1,2,3], undefined, undefined
-
-  var arr = [].concat(nums, [4, 5, 6]);
-
-  console.log(arr); // [ 1, 2, 3, 4, 5, 6 ]
-
-  // rest params
-  function joinStuff() {
-    for (var _len = arguments.length, stuffs = Array(_len), _key = 0; _key < _len; _key++) {
-      stuffs[_key] = arguments[_key];
-    }
-
-    console.log(stuffs.join('-'));
-  }
-
-  joinStuff('hello', 'my', 'name', 'is'); // hello-my-name-is
+  // tag by prepending the prefix to a string
+  str(_templateObject, a, b, reverseString(b));
 })();
 //# sourceMappingURL=es5.js.map
